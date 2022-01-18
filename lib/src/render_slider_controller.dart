@@ -11,9 +11,13 @@ class RenderSliderController extends RenderBox {
   RenderSliderController({
     required double value,
     required ValueChanged<double> onChanged,
+    required double min,
+    required double max,
     required SliderDecoration sliderDecoration,
   })  : _value = value,
         _onChanged = onChanged,
+        _min = min,
+        _max = max,
         _sliderDecoration = sliderDecoration {
     /// Setting up the drag gesture for the slider widget
     _drag = HorizontalDragGestureRecognizer()
@@ -34,8 +38,8 @@ class RenderSliderController extends RenderBox {
 
   set value(double val) {
     assert(
-      val >= 0.0 && val <= _max,
-      'value should be between the 0.0 to 100.0',
+      val >= _min && val <= _max,
+      'value should be between the min or 0.0 to max or 100.0',
     );
     if (_value == val) {
       return;
@@ -62,6 +66,36 @@ class RenderSliderController extends RenderBox {
     markNeedsPaint();
   }
 
+  /// Indicates the Minimum value for the slider
+  /// If min is null then the default value 0.0 is used
+  double get min => _min;
+  double _min;
+
+  set min(double val) {
+    if (_min == val) {
+      return;
+    }
+
+    /// Setting the value and calling the paint method to render the slider widget
+    _min = val;
+    markNeedsPaint();
+  }
+
+  /// Indicates the Maximum value for the slider
+  /// If max is null then the default value 100.0 is used
+  double get max => _max;
+  double _max;
+
+  set max(double val) {
+    if (_max == val) {
+      return;
+    }
+
+    /// Setting the value and calling the paint method to render the slider widget
+    _max = val;
+    markNeedsPaint();
+  }
+
   /// Used to Decorate the Slider Widget
   SliderDecoration get sliderDecoration => _sliderDecoration;
   SliderDecoration _sliderDecoration;
@@ -77,9 +111,6 @@ class RenderSliderController extends RenderBox {
     markNeedsPaint();
     markNeedsLayout();
   }
-
-  /// Maximum value for the slider
-  final double _max = 100.0;
 
   /// Default stroke width for the painters
   final double _strokeWidth = 4.0;
@@ -131,7 +162,7 @@ class RenderSliderController extends RenderBox {
     );
 
     /// Drawing the active part of slider or bar from left to thumb position
-    final thumbDx = (_value / _max) * size.width;
+    final thumbDx = ((_value - _min) / (_max - _min)) * size.width;
     canvas.drawRRect(
       RRect.fromRectAndCorners(
         Offset.zero & Size(thumbDx, _sliderDecoration.height),
@@ -192,8 +223,8 @@ class RenderSliderController extends RenderBox {
     /// Clamp the position between the full width of the render object
     var dx = localPosition.dx.clamp(0.0, size.width);
 
-    /// Make the size between 0 and 1 with only 1 decimal and multiply by 100.0.
-    _value = double.parse((dx / size.width).toStringAsFixed(1)) * _max;
+    /// Make the size between 0 and 1 with only 1 decimal and multiply it.
+    _value = double.parse((dx / size.width).toStringAsFixed(1)) * (_max - _min) + _min;
     _onChanged(_value);
 
     /// Calling the paint and layout method to render the slider widget

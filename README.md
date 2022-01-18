@@ -69,6 +69,8 @@ SliderController(
 
 | Parameter |  Default | Description  |
 | ------------ | ------------ | ------------ |
+| double min | 0.0 | Indicates the Minimum value for the slider |
+| double max | 100.0 | Indicates the Maximum value for the slider |
 | SliderDecoration sliderDecoration | -- | Used to Decorate the Slider Widget |
 
 ### Optional parameters of SliderDecoration
