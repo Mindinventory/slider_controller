@@ -33,10 +33,12 @@ class MyHomePage extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         alignment: Alignment.center,
         child: SliderController(
-          value: 50.0,
+          value: 100.0,
           onChanged: (value) {
-            developer.log('slider value : $value');
+            developer.log('Slider Value : $value');
           },
+          min: 50.0,
+          max: 150.0,
           sliderDecoration: SliderDecoration(
             inactiveColor: const Color(0xFF1A2942),
             activeColor: const Color(0xFF2BA1C3),
