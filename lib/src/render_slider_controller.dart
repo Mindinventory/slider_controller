@@ -224,7 +224,8 @@ class RenderSliderController extends RenderBox {
     var dx = localPosition.dx.clamp(0.0, size.width);
 
     /// Make the size between 0 and 1 with only 1 decimal and multiply it.
-    _value = double.parse((dx / size.width).toStringAsFixed(1)) * (_max - _min) + _min;
+    var desiredDx = double.parse((dx / size.width).toStringAsFixed(1));
+    _value = desiredDx * (_max - _min) + _min;
     _onChanged(_value);
 
     /// Calling the paint and layout method to render the slider widget
