@@ -72,6 +72,7 @@ SliderController(
 | double min | 0.0 | Indicates the Minimum value for the slider |
 | double max | 100.0 | Indicates the Maximum value for the slider |
 | SliderDecoration sliderDecoration | -- | Used to Decorate the Slider Widget |
+| bool isDraggable | true | Used to Enable or Disable Drag Gesture of Slider |
 
 ### Optional parameters of SliderDecoration
 ------------

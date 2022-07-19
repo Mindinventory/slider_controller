@@ -14,19 +14,23 @@ class RenderSliderController extends RenderBox {
     required double min,
     required double max,
     required SliderDecoration sliderDecoration,
+    required bool isDraggable,
   })  : _value = value,
         _onChanged = onChanged,
         _min = min,
         _max = max,
-        _sliderDecoration = sliderDecoration {
-    /// Setting up the drag gesture for the slider widget
-    _drag = HorizontalDragGestureRecognizer()
-      ..onStart = (DragStartDetails details) {
-        _updateSliderThumbPosition(details.localPosition);
-      }
-      ..onUpdate = (DragUpdateDetails details) {
-        _updateSliderThumbPosition(details.localPosition);
-      };
+        _sliderDecoration = sliderDecoration,
+        _isDraggable = isDraggable {
+    if (_isDraggable) {
+      /// Setting up the drag gesture for the slider widget
+      _drag = HorizontalDragGestureRecognizer()
+        ..onStart = (DragStartDetails details) {
+          _updateSliderThumbPosition(details.localPosition);
+        }
+        ..onUpdate = (DragUpdateDetails details) {
+          _updateSliderThumbPosition(details.localPosition);
+        };
+    }
   }
 
   /// Getter and Setter for the slider widget to render
@@ -108,6 +112,21 @@ class RenderSliderController extends RenderBox {
     /// Setting the decoration and calling the paint and layout method to render the
     /// slider widget
     _sliderDecoration = decoration;
+    markNeedsPaint();
+    markNeedsLayout();
+  }
+
+  /// Used to Enable or Disable Drag Gesture of Slider
+  bool get isDraggable => _isDraggable;
+  bool _isDraggable;
+
+  set isDraggable(bool isDrag) {
+    if (_isDraggable == isDrag) {
+      return;
+    }
+
+    /// Setting the Enable or Disable Behaviour of the Drag Gesture
+    _isDraggable = isDrag;
     markNeedsPaint();
     markNeedsLayout();
   }

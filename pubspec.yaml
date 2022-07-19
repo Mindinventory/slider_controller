@@ -1,6 +1,6 @@
 name: slider_controller
 description: A package that gives us a slider controller a custom widget. This widget is used for easy customization for the slider widget.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/Mindinventory/slider_controller
 
 environment:
