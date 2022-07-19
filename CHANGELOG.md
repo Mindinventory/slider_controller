@@ -1,3 +1,7 @@
+[0.0.4] - 2022-07-19
+
+* Added isDraggable flag for the Drag Gesture of Slider.
+
 [0.0.3] - 2022-01-20
 
 * Update the dart file formats.

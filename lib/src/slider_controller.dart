@@ -14,6 +14,7 @@ class SliderController extends LeafRenderObjectWidget {
     this.min = 0.0,
     this.max = 100.0,
     this.sliderDecoration,
+    this.isDraggable = true,
   })  : assert(
           value >= min && value <= max,
           'value should be between the min or 0.0 to max or 100.0',
@@ -44,6 +45,10 @@ class SliderController extends LeafRenderObjectWidget {
   /// If decoration is null then the default value of the slider decoration is used
   final SliderDecoration? sliderDecoration;
 
+  /// Used to Enable or Disable Drag Gesture of Slider
+  /// Default value true = Enable is used
+  final bool isDraggable;
+
   @override
   RenderObject createRenderObject(BuildContext context) {
     /// Create and return the render object
@@ -53,6 +58,7 @@ class SliderController extends LeafRenderObjectWidget {
       min: min,
       max: max,
       sliderDecoration: sliderDecoration ?? SliderDecoration(),
+      isDraggable: isDraggable,
     );
   }
 
@@ -67,6 +73,7 @@ class SliderController extends LeafRenderObjectWidget {
       ..onChanged = onChanged
       ..min = min
       ..max = max
-      ..sliderDecoration = sliderDecoration ?? SliderDecoration();
+      ..sliderDecoration = sliderDecoration ?? SliderDecoration()
+      ..isDraggable = isDraggable;
   }
 }
