@@ -11,12 +11,14 @@ class RenderSliderController extends RenderBox {
   RenderSliderController({
     required double value,
     required ValueChanged<double> onChanged,
+    required ValueChanged<double>? onChangeDone,
     required double min,
     required double max,
     required SliderDecoration sliderDecoration,
     required bool isDraggable,
   })  : _value = value,
         _onChanged = onChanged,
+        _onChangeDone = onChangeDone,
         _min = min,
         _max = max,
         _sliderDecoration = sliderDecoration,
@@ -30,6 +32,9 @@ class RenderSliderController extends RenderBox {
         ..onUpdate = (DragUpdateDetails details) {
           _updateSliderThumbPosition(details.localPosition);
         };
+      _drag.onEnd = (DragEndDetails details) {
+        onChangeDone?.call(_value);
+      };
     }
   }
 
@@ -69,6 +74,8 @@ class RenderSliderController extends RenderBox {
     _onChanged = changed;
     markNeedsPaint();
   }
+
+  ValueChanged<double>? _onChangeDone;
 
   /// Indicates the Minimum value for the slider
   /// If min is null then the default value 0.0 is used
