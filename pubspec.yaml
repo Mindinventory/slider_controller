@@ -1,7 +1,8 @@
 name: slider_controller
 description: A package that gives us a slider controller a custom widget. This widget is used for easy customization for the slider widget.
-version: 0.0.4
-homepage: https://github.com/Mindinventory/slider_controller
+version: 0.0.5
+repository: https://github.com/Mindinventory/slider_controller
+issue_tracker: https://github.com/Mindinventory/slider_controller/issues
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
@@ -14,7 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -41,13 +41,13 @@ A package that gives us a slider controller a custom widget. This widget is used
 
 Import it to your project file
 
-```
+```dart
 import 'package:slider_controller/slider_controller.dart';
 ```
 
 And add it in its most basic form like it:
 
-```
+```dart
 SliderController(
   value: 50.0,
   onChanged: (value) {
@@ -59,34 +59,36 @@ SliderController(
 ### Required parameters of SliderController
 ------------
 
-| Parameter |  Description  |
-| ------------ |  ------------ |
-| double value | Indicates the default slider thumb value between the 0.0 to 100.0 |
+| Parameter                      | Description                                                                            |
+|--------------------------------|----------------------------------------------------------------------------------------|
+| double value                   | Indicates the default slider thumb value between the 0.0 to 100.0                      |
 | ValueChanged<double> onChanged | Called during a drag when the user is selecting a new value for the slider by dragging |
 
 ### Optional parameters of SliderController
 ------------
 
-| Parameter |  Default | Description  |
-| ------------ | ------------ | ------------ |
-| double min | 0.0 | Indicates the Minimum value for the slider |
-| double max | 100.0 | Indicates the Maximum value for the slider |
-| SliderDecoration sliderDecoration | -- | Used to Decorate the Slider Widget |
-| bool isDraggable | true | Used to Enable or Disable Drag Gesture of Slider |
+| Parameter                           | Default | Description                                                       |
+|-------------------------------------|---------|-------------------------------------------------------------------|
+| ValueChanged<double>? onChangeEnd   | -       | Called when the user is done selecting a new value for the slider |
+| ValueChanged<double>? onChangeStart | -       | Called when the user starts selecting a new value for the slider  |
+| double min                          | 0.0     | Indicates the Minimum value for the slider                        |
+| double max                          | 100.0   | Indicates the Maximum value for the slider                        |
+| SliderDecoration sliderDecoration   | --      | Used to Decorate the Slider Widget                                |
+| bool isDraggable                    | true    | Used to Enable or Disable Drag Gesture of Slider                  |
 
 ### Optional parameters of SliderDecoration
 ------------
 
-| Parameter |  Default | Description  |
-| ------------ | ------------ | ------------ |
+| Parameter           | Default         | Description                                                     |
+|---------------------|-----------------|-----------------------------------------------------------------|
 | Color inactiveColor | Colors.blueGrey | Defines the background color of the inactive part of the slider |
-| Color activeColor | Colors.blue | Defines the background color of the active part of the slider |
-| Color thumbColor | Colors.white | Defines the thumb color of the slider |
-| double borderRadius | 20.0 | Indicates the rounded border radius for the slider |
-| double height | 50.0 | Indicates the height of the slider |
-| bool isThumbVisible | true | Indicates that slider thumb is visible or not |
-| double thumbHeight | 25.0 | Indicates the height of the slider thumb |
-| double thumbWidth | 5.0 | Indicates the width of the slider thumb |
+| Color activeColor   | Colors.blue     | Defines the background color of the active part of the slider   |
+| Color thumbColor    | Colors.white    | Defines the thumb color of the slider                           |
+| double borderRadius | 20.0            | Indicates the rounded border radius for the slider              |
+| double height       | 50.0            | Indicates the height of the slider                              |
+| bool isThumbVisible | true            | Indicates that slider thumb is visible or not                   |
+| double thumbHeight  | 25.0            | Indicates the height of the slider thumb                        |
+| double thumbWidth   | 5.0             | Indicates the width of the slider thumb                         |
 
 ### Guideline for contributors
 ------------

@@ -11,7 +11,8 @@ class SliderController extends LeafRenderObjectWidget {
     Key? key,
     required this.value,
     required this.onChanged,
-    this.onChangeDone = null,
+    this.onChangeEnd,
+    this.onChangeStart,
     this.min = 0.0,
     this.max = 100.0,
     this.sliderDecoration,
@@ -34,7 +35,11 @@ class SliderController extends LeafRenderObjectWidget {
   /// by dragging.
   final ValueChanged<double> onChanged;
 
-  final ValueChanged<double>? onChangeDone;
+  /// Called when the user is done selecting a new value for the slider.
+  final ValueChanged<double>? onChangeEnd;
+
+  /// Called when the user starts selecting a new value for the slider.
+  final ValueChanged<double>? onChangeStart;
 
   /// Indicates the Minimum value for the slider
   /// If min is null then the default value 0.0 is used
@@ -58,7 +63,8 @@ class SliderController extends LeafRenderObjectWidget {
     return RenderSliderController(
       value: value,
       onChanged: onChanged,
-      onChangeDone: onChangeDone,
+      onChangeEnd: onChangeEnd,
+      onChangeStart: onChangeStart,
       min: min,
       max: max,
       sliderDecoration: sliderDecoration ?? SliderDecoration(),
@@ -75,6 +81,8 @@ class SliderController extends LeafRenderObjectWidget {
     renderObject
       ..value = value
       ..onChanged = onChanged
+      ..onChangeEnd = onChangeEnd
+      ..onChangeStart = onChangeStart
       ..min = min
       ..max = max
       ..sliderDecoration = sliderDecoration ?? SliderDecoration()
