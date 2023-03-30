@@ -11,12 +11,16 @@ class RenderSliderController extends RenderBox {
   RenderSliderController({
     required double value,
     required ValueChanged<double> onChanged,
+    required ValueChanged<double>? onChangeEnd,
+    required ValueChanged<double>? onChangeStart,
     required double min,
     required double max,
     required SliderDecoration sliderDecoration,
     required bool isDraggable,
   })  : _value = value,
         _onChanged = onChanged,
+        _onChangeEnd = onChangeEnd,
+        _onChangeStart = onChangeStart,
         _min = min,
         _max = max,
         _sliderDecoration = sliderDecoration,
@@ -25,10 +29,19 @@ class RenderSliderController extends RenderBox {
       /// Setting up the drag gesture for the slider widget
       _drag = HorizontalDragGestureRecognizer()
         ..onStart = (DragStartDetails details) {
-          _updateSliderThumbPosition(details.localPosition);
+          _updateSliderThumbPosition(
+            details.localPosition,
+            ChangeValueType.changeStart,
+          );
         }
         ..onUpdate = (DragUpdateDetails details) {
-          _updateSliderThumbPosition(details.localPosition);
+          _updateSliderThumbPosition(
+            details.localPosition,
+            ChangeValueType.change,
+          );
+        }
+        ..onEnd = (DragEndDetails details) {
+          _onChangeEnd?.call(_value);
         };
     }
   }
@@ -67,6 +80,36 @@ class RenderSliderController extends RenderBox {
     /// Setting the onChanged Function and calling the paint method to render the
     /// slider widget
     _onChanged = changed;
+    markNeedsPaint();
+  }
+
+  /// Called when the user is done selecting a new value for the slider.
+  ValueChanged<double>? get onChangeEnd => _onChangeEnd;
+  ValueChanged<double>? _onChangeEnd;
+
+  set onChangeEnd(ValueChanged<double>? changed) {
+    if (_onChangeEnd == changed) {
+      return;
+    }
+
+    /// Setting the onChangeEnd Function and calling the paint method to render the
+    /// slider widget
+    _onChangeEnd = changed;
+    markNeedsPaint();
+  }
+
+  /// Called when the user starts selecting a new value for the slider.
+  ValueChanged<double>? get onChangeStart => _onChangeStart;
+  ValueChanged<double>? _onChangeStart;
+
+  set onChangeStart(ValueChanged<double>? changed) {
+    if (_onChangeStart == changed) {
+      return;
+    }
+
+    /// Setting the onChangeStart Function and calling the paint method to render the
+    /// slider widget
+    _onChangeStart = changed;
     markNeedsPaint();
   }
 
@@ -238,14 +281,28 @@ class RenderSliderController extends RenderBox {
   }
 
   /// Used to update the slider thumb position
-  void _updateSliderThumbPosition(Offset localPosition) {
+  void _updateSliderThumbPosition(
+    Offset localPosition,
+    ChangeValueType changeValueType,
+  ) {
     /// Clamp the position between the full width of the render object
     var dx = localPosition.dx.clamp(0.0, size.width);
 
     /// Make the size between 0 and 1 with only 1 decimal and multiply it.
     var desiredDx = double.parse((dx / size.width).toStringAsFixed(1));
     _value = desiredDx * (_max - _min) + _min;
-    _onChanged(_value);
+
+    switch (changeValueType) {
+      case ChangeValueType.changeStart:
+        _onChangeStart?.call(_value);
+        break;
+      case ChangeValueType.change:
+        _onChanged(_value);
+        break;
+      case ChangeValueType.changeEnd:
+        _onChangeEnd?.call(_value);
+        break;
+    }
 
     /// Calling the paint and layout method to render the slider widget
     markNeedsPaint();
@@ -258,4 +315,10 @@ class RenderSliderController extends RenderBox {
     _drag.dispose();
     super.detach();
   }
+}
+
+enum ChangeValueType {
+  changeStart,
+  change,
+  changeEnd,
 }
